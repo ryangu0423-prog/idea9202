@@ -4,7 +4,7 @@ Sound-responsive classroom installation study for Moore Park / Allianz Stadium G
 
 ## Run
 
-Node.js 20 or newer, no package installation required:
+Node.js 22 or 24, no package installation required:
 
 ```sh
 npm run check
@@ -25,9 +25,28 @@ The server uses port 3000 (override with `PORT`). Microphone input requires HTTP
 
 The meter responds quickly. The horse uses additional smoothing, hysteresis and sustained dwell. Clips 1–6 loop; quiet after a high state plays 7 to Alert, then 8 to Calm when appropriate. Renewed sustained noise can interrupt recovery. Lower-volume feedback appears before the recovery clip starts.
 
-## GitHub Pages
+## Download and run on a Mac
 
-All browser assets use relative paths; the project works under a repository subpath without a build. In repository **Settings → Pages**, select **Deploy from a branch**, branch **main**, folder **/(root)**, and save. GitHub displays the published address after deployment. GitHub API/Pages connectivity is restricted in the onboarding machine, so publication must be confirmed in GitHub.
+The repository stays private. Sign in to GitHub with an account that can access this repository, then use **Code → Download ZIP** (or https://github.com/ryangu0423-prog/idea9202/archive/refs/heads/main.zip). The ZIP includes the complete project, all eight source videos, reference scene, three audience composites and screenshots. Extract it in Downloads.
+
+1. Install the current Node.js LTS release for macOS from https://nodejs.org/ (Node.js 22 or 24 recommended).
+2. In Terminal, run:
+
+   ```sh
+   cd ~/Downloads/idea9202-main
+   node --version
+   npm run check
+   npm test
+   npm run dev
+   ```
+
+3. On that same Mac, open http://localhost:3000 in Chrome or Safari. This is your own Mac's server, not a cloud address. Keep Terminal open while presenting; press Control-C to stop.
+4. Click **Enable microphone** and allow access. On macOS, allow your browser under **System Settings → Privacy & Security → Microphone** if needed. Under Settings, set a quiet baseline or use the manual slider. If macOS/browser permission was changed, reload and enable the microphone again.
+5. If port 3000 is occupied, use `PORT=3002 npm run dev` and open http://localhost:3002 instead.
+
+No `npm install`, API keys, cloud services or hosting account is needed. Open the app through the local server rather than double-clicking `index.html`, because browser modules and microphone access require a suitable origin.
+
+This cloud environment does not provide an externally accessible preview endpoint. GitHub Pages is not used; do not change repository visibility or enable Pages to run this project.
 
 ## Validation
 
