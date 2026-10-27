@@ -1,0 +1,14 @@
+{
+  "name": "Keep the Horses Safe — browser preview",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Keep the Horses Safe",
+      "onAutoForward": "openBrowser",
+      "protocol": "http"
+    }
+  },
+  "postCreateCommand": "npm run check && npm test",
+  "postStartCommand": "bash .devcontainer/start-preview.sh"
+}

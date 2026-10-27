@@ -25,6 +25,14 @@ The server uses port 3000 (override with `PORT`). Microphone input requires HTTP
 
 The meter responds quickly. The horse uses additional smoothing, hysteresis and sustained dwell. Clips 1–6 loop; quiet after a high state plays 7 to Alert, then 8 to Calm when appropriate. Renewed sustained noise can interrupt recovery. Lower-volume feedback appears before the recovery clip starts.
 
+## Open in a browser with GitHub Codespaces
+
+Open https://codespaces.new/ryangu0423-prog/idea9202 while signed in to GitHub with access to this private repository. Confirm creation of a Codespace on `main`. This uses your GitHub Codespaces quota; GitHub may require billing setup if no quota is available.
+
+The included devcontainer installs the Node.js runtime, checks the project, starts the server and requests that forwarded port 3000 open in your browser. If the preview tab does not open automatically, use **Ports → 3000 → Open in Browser** in the Codespaces editor. Keep port visibility **Private**. The HTTPS preview supports browser microphone permission; allow microphone access in the preview tab.
+
+Codespaces provisioning and your account's access/quota cannot be verified from this cloud environment. This is an external browser-based runtime, not an already deployed public website. Stop the Codespace after presenting to avoid consuming more runtime quota.
+
 ## Download and run on a Mac
 
 The repository stays private. Sign in to GitHub with an account that can access this repository, then use **Code → Download ZIP** (or https://github.com/ryangu0423-prog/idea9202/archive/refs/heads/main.zip). The ZIP includes the complete project, all eight source videos, reference scene, three audience composites and screenshots. Extract it in Downloads.
