@@ -9,7 +9,8 @@ export class VideoPlaybackController {
  requestClip(clip) {
     const generation=++this.generation;this.clip=clip;const source=new URL(this.assetUrl(clip),this.video.baseURI);source.searchParams.set('_play',String(generation));this.expectedSource=source.href;this.phase='loading';
     this.clearLoadTimer();this.loadTimer=setTimeout(()=>{if(generation===this.generation&&this.phase==='loading'){this.phase='failed';this.playError=new Error('Media loading timed out');this.notify();}},this.loadTimeoutMs);
-    this.video.pause();this.video.loop=clip<=6;this.video.playbackRate=clip===3?0.6:1;this.video.src=this.expectedSource;this.video.load();this.notify();return generation;
+    // load() resets playbackRate to defaultPlaybackRate in real browsers.
+    this.video.pause();this.video.loop=clip<=6;this.video.defaultPlaybackRate=clip===3?0.6:1;this.video.playbackRate=this.video.defaultPlaybackRate;this.video.src=this.expectedSource;this.video.load();this.notify();return generation;
  }
  currentSourceMatches() {
   const source=this.video.currentSrc||this.video.src;

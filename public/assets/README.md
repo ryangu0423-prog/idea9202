@@ -1,6 +1,12 @@
 # Keep the Horses Safe — source assets
 
-scene-original.png: original Gate 1 site scene exported from the top of the group's FigJam board. Use this as the architectural reference; projector, microphone and photorealistic spectator composites still need to be added. Do not substitute stick figures.
+Only the three user-supplied backgrounds from upstream commit 9c7e4be are used:
+
+- Passive: `passive.png`
+- Individual: `individual mode.png`
+- Group: `group mode.png`
+
+All three are 1672 × 941. Preserve these files byte-for-byte, including the existing people, wall artwork and projector. The deployed site must not contain any legacy `scene-*.png` files or fall back to them. `scene-projection.js` maps each mode to its exact uploaded file and stores wall corners and foreground silhouettes in native image pixels. The wall plane clips the projection; matching overlays from that mode's same image restore the foreground columns and, in Group, the two spectators in front of the wall. Resizing and Close-up move all layers together.
 
 horse-1.mp4: Calm
 horse-2.mp4: Aware

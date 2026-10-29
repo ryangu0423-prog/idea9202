@@ -16,7 +16,7 @@ The server uses port 3000 (override with `PORT`). Microphone input requires HTTP
 
 ## Present and record
 
-- Select Passive, Individual or Group manually. These are photographic audience composites; people are not detected or counted through the microphone.
+- Select Passive, Individual or Group manually. These use the supplied `passive.png`, `individual mode.png` and `group mode.png` backgrounds; people are not detected or counted through the microphone.
 - Click **Enable microphone**, grant access, then open **Settings** to set a two-second quiet baseline and sensitivity.
 - Without microphone access, use **Settings → Manual sound level**. The input label always identifies manual, live or simulated input.
 - **Start simulated demonstration** cycles from quiet to loud and back; it is explicitly labelled **Simulated demonstration**.
@@ -54,7 +54,7 @@ The repository stays private. Sign in to GitHub with an account that can access 
 
 No `npm install`, API keys, cloud services or hosting account is needed. Open the app through the local server rather than double-clicking `index.html`, because browser modules and microphone access require a suitable origin.
 
-This cloud environment does not provide an externally accessible preview endpoint. GitHub Pages is not used; do not change repository visibility or enable Pages to run this project.
+The current private hosted website is https://keep-horses-safe-gate-one.ryangu0423.chatgpt.site (sign in with the owner’s ChatGPT account). Its three backgrounds are the exact uploaded files from commit `9c7e4be`; legacy `scene-*.png` assets are removed. GitHub Pages is not used; do not change repository visibility or enable Pages to run this project.
 
 ## Validation
 
@@ -62,4 +62,4 @@ This cloud environment does not provide an externally accessible preview endpoin
 
 All ten original MP4 files were decoded with FFmpeg without changing the source assets. Automated Chromium interaction could not run in the current dev container because required system libraries (including `libnspr4.so`, `libnss3.so` and `libgbm.so.1`) are unavailable to its non-root user. Browser-only checks for playback timing, microphone permission and projection rendering remain unverified in this container.
 
-The supplied horse videos and original reference are unchanged. Photorealistic audience composites are generated scene assets.
+The supplied horse videos and the three newly uploaded audience backgrounds are unchanged. Projection corners, column masks and Group spectator masks are calibrated for their 1672 × 941 dimensions. Only video 3 plays at 0.6×; all other clips play at 1×.

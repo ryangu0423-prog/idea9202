@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node server.mjs",
     "start": "node server.mjs",
-    "check": "node --check app.js && node --check server.mjs && node --check state-machine.js",
+    "check": "node --check app.js && node --check server.mjs && node --check state-machine.js && node --check video-playback.js && node --check scene-projection.js",
     "test": "node --test tests/*.test.js"
   },
   "engines": {

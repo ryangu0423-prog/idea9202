@@ -3,19 +3,19 @@ import assert from 'node:assert/strict';
 import {VideoPlaybackController} from '../video-playback.js';
 
 class FakeVideo {
- constructor(){this.baseURI='https://example.test/';this.listeners=new Map();this.currentSrc='';this.readyState=0;this.paused=true;this.ended=false;this.error=null;this.playCount=0;this.loadCount=0;this.playImpl=()=>{this.paused=false;this.ended=false;return Promise.resolve();};}
+ constructor(){this.baseURI='https://example.test/';this.listeners=new Map();this.currentSrc='';this.readyState=0;this.paused=true;this.ended=false;this.error=null;this.playCount=0;this.loadCount=0;this.defaultPlaybackRate=1;this.playbackRate=1;this.playImpl=()=>{this.paused=false;this.ended=false;return Promise.resolve();};}
  addEventListener(name,listener){const listeners=this.listeners.get(name)??[];listeners.push(listener);this.listeners.set(name,listeners);}
  emit(name){for(const listener of this.listeners.get(name)??[])listener({type:name});}
  set src(value){this._src=value;this.currentSrc=value;}
  get src(){return this._src;}
- load(){this.loadCount++;}
+ load(){this.loadCount++;this.playbackRate=this.defaultPlaybackRate;}
  pause(){this.paused=true;this.emit('pause');}
  play(){this.playCount++;return this.playImpl();}
 }
 function setup(options={}){const video=new FakeVideo(),statuses=[],ended=[];const controller=new VideoPlaybackController(video,{onStatus:value=>statuses.push(value),onEnded:value=>ended.push(value),...options});return {video,controller,statuses,ended};}
 async function loaded(video,controller){video.readyState=2;video.currentSrc=controller.expectedSource;video.emit('loadeddata');await Promise.resolve();await Promise.resolve();}
 
-test('all ten clips use correct loop policy and only clip 3 uses slow motion',()=>{const {video,controller}=setup();for(let clip=1;clip<=10;clip++){controller.requestClip(clip);assert.equal(video.loop,clip<=6);assert.equal(video.playbackRate,clip===3?0.6:1);}controller.hold();});
+test('all ten clips use correct loop policy and clip 3 retains slow motion after load resets the rate',()=>{const {video,controller}=setup();for(let clip=1;clip<=10;clip++){controller.requestClip(clip);assert.equal(video.loop,clip<=6);assert.equal(video.playbackRate,clip===3?0.6:1);assert.equal(video.defaultPlaybackRate,clip===3?0.6:1);}controller.hold();});
 test('stale media events and old play promises cannot affect the current request',async()=>{const {video,controller}=setup();let resolveOld;let plays=0;video.playImpl=()=>{plays++;if(plays===1){video.paused=false;return new Promise(resolve=>{resolveOld=resolve;});}video.paused=false;return Promise.resolve();};controller.requestClip(9);const oldSource=controller.expectedSource;video.readyState=2;video.emit('loadeddata');assert.equal(controller.phase,'starting');controller.requestClip(10);video.currentSrc=oldSource;video.emit('loadeddata');assert.equal(controller.phase,'loading');resolveOld();await Promise.resolve();assert.equal(controller.phase,'loading');await loaded(video,controller);assert.equal(controller.phase,'playing');});
 test('loadeddata waits for the current source and usable decoded frame',async()=>{const {video,controller}=setup();controller.requestClip(7);video.currentSrc='https://example.test/old.mp4';video.readyState=2;video.emit('loadeddata');assert.equal(video.playCount,0);video.currentSrc=controller.expectedSource;video.readyState=1;video.emit('loadeddata');assert.equal(video.playCount,0);await loaded(video,controller);assert.equal(controller.phase,'playing');});
 test('only a currently playing one-shot accepts one natural ended event',async()=>{const {video,controller,ended}=setup();controller.requestClip(9);video.ended=true;video.emit('ended');assert.equal(ended.length,0);await loaded(video,controller);video.ended=true;video.emit('ended');video.emit('ended');assert.equal(controller.phase,'ended');assert.equal(ended.length,1);controller.hold();assert.equal(controller.phase,'holding');assert.equal(controller.activate(),false);video.emit('ended');assert.equal(ended.length,1);});
