@@ -35,7 +35,7 @@ Codespaces provisioning and your account's access/quota cannot be verified from 
 
 ## Download and run on a Mac
 
-The repository stays private. Sign in to GitHub with an account that can access this repository, then use **Code → Download ZIP** (or https://github.com/ryangu0423-prog/idea9202/archive/refs/heads/main.zip). The ZIP includes the complete project, all eight source videos, reference scene, three audience composites and screenshots. Extract it in Downloads.
+The repository stays private. Sign in to GitHub with an account that can access this repository, then use **Code → Download ZIP** (or https://github.com/ryangu0423-prog/idea9202/archive/refs/heads/main.zip). The ZIP includes the complete project, all ten source videos, reference scene, three audience composites and screenshots. Extract it in Downloads.
 
 1. Install the current Node.js LTS release for macOS from https://nodejs.org/ (Node.js 22 or 24 recommended).
 2. In Terminal, run:
@@ -58,8 +58,8 @@ This cloud environment does not provide an externally accessible preview endpoin
 
 ## Validation
 
-`npm test` covers all six states, boundary hysteresis, short spikes, both original one-shot recovery clips, Group dispersal and quiet recovery, final-frame hold behavior, renewed-noise interruption, and mode exit.
+`npm test` covers all six states, boundary hysteresis, Group dispersal/hold/recovery stages, Calm and Nervous dwell thresholds, interrupted recovery, repeated mode selection, mode changes in every Group stage, background timer reset, matching ordinary recovery transitions, all ten clip loop/speed settings, loading errors/timeouts, blocked playback, stale Promise results and duplicate/expired ended events.
 
-Browser validation used Chromium: all ten videos decoded and played, recovery completed in order, three scene switches, manual fallback, baseline collection, labelled simulation, close-up, full screen, and microphone unavailable/denied handling. Microphone acquisition was exercised using a browser synthetic audio device; physical microphone hardware in your browser still needs a live check.
+All ten original MP4 files were decoded with FFmpeg without changing the source assets. Automated Chromium interaction could not run in the current dev container because required system libraries (including `libnspr4.so`, `libnss3.so` and `libgbm.so.1`) are unavailable to its non-root user. Browser-only checks for playback timing, microphone permission and projection rendering remain unverified in this container.
 
 The supplied horse videos and original reference are unchanged. Photorealistic audience composites are generated scene assets.
