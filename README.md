@@ -23,7 +23,7 @@ The server uses port 3000 (override with `PORT`). Microphone input requires HTTP
 - Use **Close-up** to inspect the projection on the wall, and **Full screen** for presentation.
 - Estimated dB uses an arbitrary offset from digital amplitude. It is uncalibrated and is not dB SPL. Baseline and sensitivity adjust the horse's response, not physical sound calibration.
 
-The meter responds quickly. The horse uses additional smoothing, hysteresis and sustained dwell. Clips 1–6 loop; quiet after a high state plays 7 to Alert, then 8 to Calm when appropriate. Renewed sustained noise can interrupt recovery. Lower-volume feedback appears before the recovery clip starts.
+The meter responds quickly. The horse uses additional smoothing, hysteresis and sustained dwell. Clips 1–6 loop; Passive and Individual use clips 7–8 for the existing recovery. In Group mode, sustained severe noise progresses through the highly agitated loop and then plays clip 9 once, holding its final frame. Once sound continuously returns to the existing quiet threshold, clip 10 plays once and returns to the calm loop. Sustained renewed noise can interrupt recovery. Lower-volume feedback appears before the recovery clip starts.
 
 ## Open in a browser with GitHub Codespaces
 
@@ -58,8 +58,8 @@ This cloud environment does not provide an externally accessible preview endpoin
 
 ## Validation
 
-`npm test` covers all six states, boundary hysteresis, short spikes, both one-shot recovery clips, recovery to Alert, and renewed-noise interruption.
+`npm test` covers all six states, boundary hysteresis, short spikes, both original one-shot recovery clips, Group dispersal and quiet recovery, final-frame hold behavior, renewed-noise interruption, and mode exit.
 
-Browser validation used Chromium: all eight videos decoded and played, recovery completed in order, three scene switches, manual fallback, baseline collection, labelled simulation, close-up, full screen, and microphone unavailable/denied handling. Microphone acquisition was exercised using a browser synthetic audio device; physical microphone hardware in your browser still needs a live check.
+Browser validation used Chromium: all ten videos decoded and played, recovery completed in order, three scene switches, manual fallback, baseline collection, labelled simulation, close-up, full screen, and microphone unavailable/denied handling. Microphone acquisition was exercised using a browser synthetic audio device; physical microphone hardware in your browser still needs a live check.
 
 The supplied horse videos and original reference are unchanged. Photorealistic audience composites are generated scene assets.
